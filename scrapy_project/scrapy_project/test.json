@@ -1,0 +1,63 @@
+[
+{"price": "<span class=\"u-t3 u-display-block\">Nordberg/Holstein</span>"}
+][
+[
+{"price": "Perle p\u00e5 Sagene"}
+][
+{"price": null}
+][
+{"price": "2"}
+][
+{"price": ["8", "950", "000"]}
+][
+{"price": "\n            \u00a0\u00a0 kr"}
+][
+{"price": "\n            \u00a0\u00a0 kr"}
+][
+{"price": "2850000"}
+][
+{"price": "3290000"}
+][
+{"price": "8950000", "fees": ""}
+][
+{"price": "2650000", "fees": "179181"}
+][
+{"price": "3300000", "fees": "88000"},
+{"price": "1800000", "fees": "27000004638000"},
+{"price": "1545000", "fees": "36050004340000"},
+{"price": "1300000", "fees": "19500005010000"},
+{"price": "4550000", "fees": "1550419848"},
+{"price": "4150000", "fees": "69000"},
+{"price": "3990000", "fees": "42000"},
+{"price": "3670000", "fees": "315000"},
+{"price": "8500000", "fees": "223742"},
+{"price": "16900000", "fees": "60906"},
+{"price": "2950000", "fees": "541000"},
+{"price": "1050000", "fees": "2450000"},
+{"price": "5950000", "fees": "151342"},
+{"price": "10300000", "fees": "258722"},
+{"price": "9500000", "fees": "254270"}[
+{"price": "8950000", "fees": "214"},
+{"price": "1545000", "fees": "36050004340000"},
+{"price": "1300000", "fees": "19500005010000"},
+{"price": "4550000", "fees": "1550419848"}[
+{"price": "7700000", "fees": "203742", "total_price": "7903742"}
+][
+{"address": "Kalbakkslyngen 7, 0951 Oslo", "price": "3500000", "fees": "155000", "total_price": "8457", "overheads": "3663457", "type": "Leilighet", "tenure": "Andel"}
+][
+{"address": "Schweigaards gate 58 D, 0656 Oslo", "price": "3870000", "fees": "14000", "total_price": "113972", "overheads": "3997972", "type": "Leilighet", "tenure": "Eier (Selveier)"}
+][
+{"address": "Herslebs gate 21, 0561 Oslo", "price": "2650000", "fees": "1289000", "total_price": "8032", "overheads": "3947032", "type": "Leilighet", "tenure": "Andel"},
+{"address": "Kapellveien 129 E, 0493 Oslo", "price": "4300000", "fees": "118742", "total_price": "4418742", "overheads": "500", "type": "Leilighet", "tenure": "Eier (Selveier)"},
+{"address": "Lakkegata 68B, 0562 Oslo", "price": "2750000", "fees": "548856", "total_price": "1132", "overheads": "3299988", "type": "Leilighet", "tenure": "Andel"},
+{"address": "Ullernkammen 28, 0380 Oslo", "price": "3900000", "fees": "108742", "total_price": "4008742", "overheads": "2959", "type": "Leilighet", "tenure": "Eier (Selveier)"},
+{"address": "Hans Nielsen Hauges gate 33, 0481 Oslo", "price": "4800000", "fees": "314543", "total_price": "8957", "overheads": "5123500", "type": "Leilighet", "tenure": "Andel"},
+{"address": "Fjellgata 32A, 0566 Oslo", "price": "3500000", "fees": "88842", "total_price": "3588842", "overheads": "1666", "type": "Leilighet", "tenure": "Eier (Selveier)"},
+{"address": "Hoffsjef L\u00f8venskiolds vei 42E, 0382 Oslo", "price": "7200000", "fees": "69000", "total_price": "192962", "overheads": "7461962", "type": "Leilighet", "tenure": "Eier (Selveier)"},
+{"address": "Thomas Heftyes gate 64C, 0267 Oslo", "price": "8250000", "fees": "8510", "total_price": "8258510", "overheads": "4763", "type": "Leilighet", "tenure": "Aksje"}
+][
+{"address": "Raschs vei 35, 1176 Oslo", "price": "10700000", "fees": "282770", "total_price": "10982770", "overheads": "13680", "type": "Enebolig", "tenure": "Eier (Selveier)"}
+][
+{"address": "PLOGVEIEN 37, 0679 Oslo", "price": "4990000", "fees": "190000", "total_price": "15385", "overheads": "5195385", "type": "Leilighet", "tenure": "Andel"},
+{"address": "Raschs vei 35, 1176 Oslo", "price": "10700000", "fees": "282770", "total_price": "10982770", "overheads": "13680", "type": "Enebolig", "tenure": "Eier (Selveier)"}
+]

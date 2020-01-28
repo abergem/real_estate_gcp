@@ -28,13 +28,22 @@ class FinnSpider(scrapy.Spider):
         def extract_digits(string):
             return re.sub('\D', '', string)
 
-        yield {
-            
-            'address': response.xpath('//section[@class="panel"]//p[@class="u-caption"]/text()').get(),
-            'price': extract_digits(response.xpath('//div[@class="panel"]//span[@class="u-t3"]/text()').get()),
-            'fees': extract_digits(response.xpath('//div[@class="panel"]//dl[@class="definition-list"]/dd').get()),
-            'total_price': extract_digits(response.xpath('//div[@class="panel"]//dl[@class="definition-list"]/dd[2]').get()),
-            'overheads': extract_digits(response.xpath('//div[@class="panel"]//dl[@class="definition-list"]/dd[3]').get()),
-            'type': response.xpath('//section[@class="panel"][2]//dd/text()').get(),
-            'tenure': response.xpath('//section[@class="panel"][2]//dd[2]/text()').get()
-        }
+        d = {}
+        for i, _ in enumerate(response.xpath(f'//div[@class="panel"]//dl[@class="definition-list"]/dt').getall()):
+            field = response.xpath(f'//div[@class="panel"]//dl[@class="definition-list"]/dt[{i+1}]/text()').get()
+            value = extract_digits(response.xpath(f'//div[@class="panel"]//dl[@class="definition-list"]/dd[{i+1}]').get())
+            if field == 'Omkostninger':
+                d['fees'] = value
+            elif field == 'Totalpris':
+                d['total_price'] = value
+            elif field == 'Felleskost/mnd.':
+                d['overheads'] = value
+            elif field == 'Fellesgjeld':
+                d['joint_debt'] = value
+
+            d['address'] = response.xpath('//section[@class="panel"]//p[@class="u-caption"]/text()').get()
+            d['price'] = extract_digits(response.xpath('//div[@class="panel"]//span[@class="u-t3"]/text()').get())
+            d['type'] = response.xpath('//section[@class="panel"][2]//dd/text()').get()
+            d['tenure'] = response.xpath('//section[@class="panel"][2]//dd[2]/text()').get()
+
+        yield d

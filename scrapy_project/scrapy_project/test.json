@@ -60,4 +60,15 @@
 ][
 {"address": "PLOGVEIEN 37, 0679 Oslo", "price": "4990000", "fees": "190000", "total_price": "15385", "overheads": "5195385", "type": "Leilighet", "tenure": "Andel"},
 {"address": "Raschs vei 35, 1176 Oslo", "price": "10700000", "fees": "282770", "total_price": "10982770", "overheads": "13680", "type": "Enebolig", "tenure": "Eier (Selveier)"}
+][
+{"joint_debt": "26172", "address": ["Hegdehaugsveien 14C, 0167 Oslo"], "price": ["4950000"], "type": ["Leilighet"], "tenure": "Eier (Selveier)", "fees": "134042", "total_price": "5110214", "overheads": "2190"},
+{"fees": "203742", "address": ["Lyder Sagens gate 34A, 0360 Oslo"], "price": ["7700000"], "type": ["Leilighet"], "tenure": "Eier (Selveier)", "total_price": "7903742", "overheads": "3472"},
+{"fees": "118742", "address": ["Kapellveien 129 E, 0493 Oslo"], "price": ["4300000"], "type": ["Leilighet"], "tenure": "Eier (Selveier)", "total_price": "4418742", "overheads": "500"},
+{"joint_debt": "88000", "address": ["V\u00f8yensvingen 13, 0458 Oslo"], "price": ["3300000"], "type": ["Leilighet"], "tenure": "Aksje", "overheads": "2654"},
+{"joint_debt": "548856", "address": ["Lakkegata 68B, 0562 Oslo"], "price": ["2750000"], "type": ["Leilighet"], "tenure": "Andel", "fees": "1132", "total_price": "3299988", "overheads": "5062"}
+][
+{"joint_debt": "74321", "address": "Bygd\u00f8y all\u00e9 26A, 0265 Oslo", "price": "4900000", "type": "Leilighet", "tenure": "Eier (Selveier)", "fees": "133992", "total_price": "5108313", "overheads": "3433"},
+{"joint_debt": "115000", "address": "Lambertseterveien 59, 1154 Oslo", "price": "3200000", "type": "Leilighet", "tenure": "Andel", "fees": "8319", "total_price": "3323319", "overheads": "2921"},
+{"joint_debt": "20000", "address": "Garver Ytteborgs vei 95B, 0977 Oslo", "price": "2500000", "type": "Leilighet", "tenure": "Andel", "fees": "8457", "total_price": "2528457", "overheads": "3014"},
+{"fees": "123742", "address": "Betzy Kjelsbergs vei 18C, 0486 Oslo", "price": "4500000", "type": "Leilighet", "tenure": "Eier (Selveier)", "total_price": "4623742", "overheads": "3731"}
 ]

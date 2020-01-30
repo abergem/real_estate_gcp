@@ -9,11 +9,11 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'scrapy_project'
+BOT_NAME = 'Haimato'
 
 SPIDER_MODULES = ['scrapy_project.spiders']
 NEWSPIDER_MODULE = 'scrapy_project.spiders'
-
+LOG_LEVEL = 'INFO'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'scrapy_project (+http://www.yourdomain.com)'

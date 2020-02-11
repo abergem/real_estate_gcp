@@ -1,0 +1,8 @@
+beautifulsoup4==4.8.2
+requests==2.22.0
+Scrapy==1.8.0
+selenium==3.141.0
+docker==4.2.0
+Flask==1.0.2
+gunicorn==19.9.0
+chromedriver-binary==77.0.3865.40.0

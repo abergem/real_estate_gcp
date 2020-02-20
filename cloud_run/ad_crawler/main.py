@@ -10,7 +10,6 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-# os.environ["PATH"] += os.pathsep + os.getcwd()
 @app.route("/", methods=['POST'])
 def ad_crawler():
     

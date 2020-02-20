@@ -18,9 +18,17 @@ class FinnSpider(scrapy.Spider):
     def __init__(self, **kwargs):
         
         # headless firefox webdriver
-        options = Options()
-        options.headless = True
-        self.driver = webdriver.Firefox(options=options)
+        # options = Options()
+        # options.headless = True
+        # self.driver = webdriver.Firefox(options=options)
+
+        import chromedriver_binary
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("window-size=1024,768")
+        chrome_options.add_argument("--no-sandbox")
+        self.driver = webdriver.Chrome(chrome_options=chrome_options)
         
         super(FinnSpider, self).__init__(**kwargs)
         url = kwargs.get('url')

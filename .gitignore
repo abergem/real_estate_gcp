@@ -1,3 +1,4 @@
 *.pyc
 *.vscode
 /venv
+cloud_run/ad_crawler/output

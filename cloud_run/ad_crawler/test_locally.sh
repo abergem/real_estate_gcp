@@ -1,7 +1,7 @@
 
 # Build and run docker locally
-docker build -t adcrawler .
-docker run --rm -p 8080:8080 -e PORT=8080 adcrawler
+docker build -t adcrawler-chrome .
+docker run --rm -p 8080:8080 -e PORT=8080 adcrawler-chrome
 
 # Push docker image to cloud
 docker tag [SOURCE_IMAGE] [HOSTNAME]/[PROJECT-ID]/[IMAGE]

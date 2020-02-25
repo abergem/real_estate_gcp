@@ -34,10 +34,10 @@ class FinnSpider(scrapy.Spider):
         yield scrapy.Request(url=self.url, callback=self.request_ads)
 
     def request_ads(self, response):
-        logging.info(f'Crawling {response.url}')
+        self.logger.info(f'Crawling {response.url}')
         # Follow links to each ad on the web page
-        for href in response.css('article.ads__unit a::attr(href)').getall():
-        # for href in [response.css('article.ads__unit a::attr(href)').get()]:
+        # for href in response.css('article.ads__unit a::attr(href)').getall():
+        for href in [response.css('article.ads__unit a::attr(href)').get()]:
             # Only follow URLs with 'finnkode' (there are other links as well)
             if 'finnkode' in href:
                 yield response.follow(href, callback=self.parse_ad)
@@ -46,7 +46,7 @@ class FinnSpider(scrapy.Spider):
 
         # Use selenium to click on js button
         self.driver.get(response.url)
-        logging.info(f'Scraping data from {response.url}')
+        self.logger.info(f'Scraping data from {response.url}')
         expand_data_button = self.driver.find_element_by_xpath('//button[@id="_expand"]')
         expand_data_button.click()
         d = {}
@@ -96,7 +96,7 @@ class FinnSpider(scrapy.Spider):
         # Sist endret
         d['last_edited'] = response.xpath('//section[@aria-labelledby="ad-info-heading"]//tr/td/text()').get()
 
-        self.logger.info(d)
+        self.logger.info(f'Crawled data: {d}')
         
         if not os.path.exists('output'):
             os.makedirs('output')

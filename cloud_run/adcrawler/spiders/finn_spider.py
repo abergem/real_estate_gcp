@@ -7,7 +7,7 @@ import logging
 import json
 from google.cloud import storage
 from time import sleep
-
+from datetime import datetime
 import requests
 from lxml import html
 
@@ -36,6 +36,7 @@ class FinnSpider():
             except IndexError:
                 pass
         links = ['https://finn.no'+l for l in links if 'finnkode' in l]
+        links = [l for l in links if 'newbuildings' not in l]
         
         # Parse all ads
         for url in links[:3]:
@@ -91,31 +92,33 @@ class FinnSpider():
             d = self.extract_field_value_pairs(field, value, d)
 
         # Sist endret
-        d['last_edited'] = tree.xpath('//section[@aria-labelledby="ad-info-heading"]//tr/td/text()')[0]
-
+        last_edited = tree.xpath('//section[@aria-labelledby="ad-info-heading"]//tr/td/text()')[0]
+        last_edited = datetime.strptime(last_edited, '%d. %b %Y %H:%M')
+        d['last_edited'] = last_edited.strftime('%d/%m/%Y %H:%M')
         self.logger.info(f'Crawled data: {d}')
         
-        # if not os.path.exists('output'):
-        #     os.makedirs('output')
-        # file_path = f'output/{finn_code}.json'
-        # with open(file_path, 'w') as outfile:
-        #     json.dump(d, outfile)
+        # Dump to local output folder
+        if not os.path.exists('output'):
+            os.makedirs('output')
+        file_path = f'output/{finn_code}.json'
+        with open(file_path, 'w') as outfile:
+            json.dump(d, outfile)
         
         # Upload to cloud storage
-        # bucket_name = 'advance-nuance248610-realestate-landing'
-        # source_file_name = file_path
-        # destination_blob_name = file_path
+        bucket_name = 'advance-nuance248610-realestate-landing'
+        source_file_name = file_path
+        destination_blob_name = file_path
 
-        # storage_client = storage.Client()
-        # bucket = storage_client.bucket(bucket_name)
-        # blob = bucket.blob(destination_blob_name)
-        # blob.upload_from_filename(source_file_name)
+        storage_client = storage.Client()
+        bucket = storage_client.bucket(bucket_name)
+        blob = bucket.blob(destination_blob_name)
+        blob.upload_from_filename(source_file_name)
 
-        # self.logger.info(
-        #     "File {} uploaded to {}.".format(
-        #         source_file_name, destination_blob_name
-        #     )
-        # )
+        self.logger.info(
+            "File {} uploaded to {}.".format(
+                source_file_name, destination_blob_name
+            )
+        )
 
     def extract_field_value_pairs(self, field: str, value: str, d: dict) -> dict:
         # What is usually in 'key info'
@@ -145,7 +148,7 @@ class FinnSpider():
         elif field == 'Fellesformue':
             d['joint_capital'] = self.extract_digits(value)
         elif field == 'Formuesverdi':
-            d['asset_value'] = value
+            d['asset_value'] = self.extract_digits(value)
 
         return d
 

@@ -1,6 +1,6 @@
 export GRUN_REGION='europe-west1'
 export GOOGLE_CLOUD_PROJECT='advance-nuance-248610'
-export TAG='adcrawler-chrome'
+export TAG='adcrawler'
 
 docker build -t gcr.io/$GOOGLE_CLOUD_PROJECT/$TAG .
 docker push gcr.io/$GOOGLE_CLOUD_PROJECT/$TAG

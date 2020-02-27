@@ -2,10 +2,10 @@
 
 import os
 import json
-
-from google.cloud import bigquery
 from google.cloud import storage
 import googlemaps
+from clients.bq_client import bqClient
+from datetime import datetime
 
 GCP_PROJECT = os.environ.get('GOOGLE_CLOUD_PROJECT')
 
@@ -43,8 +43,14 @@ def transform_ad_data(data, context):
     with open(destination_path) as json_file:
         data = json.load(json_file)
 
+    # Cast last_edited from string to datetime
+    data['last_edited'] = datetime.strptime(data['last_edited'], '%d/%m/%Y %H:%M')
+
     # Get geo data from googlemaps API
-    gmaps = googlemaps.Client(key='AIzaSyBTBXn1U5odDiWWizTdsT4USx84fXADwpw')
+    api_key_blob = bucket.blob('secrets/api-key.txt')
+    api_key = api_key_blob.download_as_string()
+    api_key = api_key.decode()
+    gmaps = googlemaps.Client(key=api_key)
     geocode_result = gmaps.geocode(data['address'])
     data['geo_area'] = geocode_result[0]['address_components'][2]['short_name']
     data['longitude'] = geocode_result[0]['geometry']['location']['lng']
@@ -54,14 +60,23 @@ def transform_ad_data(data, context):
     processed_file_name = 'processed_' + file_name
     processed_file_path = os.path.join('tmp', processed_file_name)
     with open(processed_file_path, 'w') as outfile:
-        json.dump(data, outfile)
+        json.dump(data, outfile, default=json_converter)
 
     # Upload processed file to cloud storage
-    destination_blob_path = os.path.join('processed', processed_file_name)
-    blob = bucket.blob(destination_blob_path)
-    blob.upload_from_filename(processed_file_path)
+    # destination_blob_path = os.path.join('processed', processed_file_name)
+    # blob = bucket.blob(destination_blob_path)
+    # blob.upload_from_filename(processed_file_path)
+    # print(f'Processed and uploaded file: {file_name}')
 
-    print(f'Processed and upload file: {file_name}')
+    # Load processed file to bigquery
+    bq_client = bqClient()
+    bq_client.load_file_to_table(processed_file_path)
+
+def json_converter(o):
+    # from: https://code-maven.com/serialize-datetime-object-as-json-in-python
+    if isinstance(o, datetime):
+        return o.__str__()
+    
 
 
 if __name__ == '__main__':
@@ -70,5 +85,5 @@ if __name__ == '__main__':
 
     data = {}
     data['bucket'] = 'advance-nuance-248610-realestate-ads'
-    data['name'] = 'landing/171235821.json'
+    data['name'] = 'landing/171366624.json'
     transform_ad_data(data, None)

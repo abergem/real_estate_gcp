@@ -1,0 +1,4 @@
+GOOGLE_CLOUD_PROJECT: 'advance-nuance-248610'
+DATASET_ID: 'real_estate'
+DATASET_LOCATION: 'EU'
+TABLE_ID: 'processed_finn_ads'

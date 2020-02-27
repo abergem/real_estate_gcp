@@ -2,6 +2,7 @@
 
 import scrapy
 import requests
+import json
 
 class CrawlerTrigger(scrapy.Spider):
     name = 'trigger_crawlers'
@@ -15,11 +16,14 @@ class CrawlerTrigger(scrapy.Spider):
         
         self.logger.info(f'Triggering crawler for {response.url}')
         payload = {'url': response.url}
-        cloud_run_url = f'https://adcrawler-e2ofq27tbq-ew.a.run.app'
+        cloud_run_url = 'https://adcrawler-e2ofq27tbq-ew.a.run.app'
         headers = {'Content-Type': 'application/json'}
-        r = requests.post(cloud_run_url, json=payload, headers=headers)
+        yield scrapy.http.JsonRequest(url=cloud_run_url, method='POST', data=payload, callback=None)
 
         next_page = response.xpath('//a[@aria-label="Neste side"]/@href').get()
 
         if next_page:
             yield response.follow(next_page, callback=self.trigger_crawler)
+
+    def parse(self, response):
+        pass

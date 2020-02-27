@@ -5,3 +5,4 @@ cloud_run/ad_crawler/output
 *middlewares.py
 *pipelines.py
 *items.py
+*.json

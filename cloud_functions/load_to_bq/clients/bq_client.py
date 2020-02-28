@@ -35,8 +35,8 @@ class bqClient():
             bigquery.SchemaField("net_internal_area", "INT64", mode="NULLABLE"),
             bigquery.SchemaField("gross_internal_area", "INT64", mode="NULLABLE"),
             
-            bigquery.SchemaField("longitude", "NUMERIC", mode="NULLABLE"),
-            bigquery.SchemaField("latitude", "NUMERIC", mode="NULLABLE"),
+            bigquery.SchemaField("longitude", "FLOAT64", mode="NULLABLE"),
+            bigquery.SchemaField("latitude", "FLOAT64", mode="NULLABLE"),
             bigquery.SchemaField("geo_area", "STRING", mode="NULLABLE"),
 
             bigquery.SchemaField("last_edited", "DATETIME", mode="NULLABLE"),
@@ -61,6 +61,6 @@ class bqClient():
 '''
 To view bq jobs run these CLI commands:
 bq ls -j -a advance-nuance-248610   -> you'll get the job_id
-bq show -j job_id
+bq show -j 7319c477-25d7-40c2-89be-ef45ffe48144
 '''
 

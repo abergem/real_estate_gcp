@@ -1,3 +1,4 @@
 google-cloud-bigquery==1.19.0
+google-cloud-storage==1.26.0
 pyyaml
 googlemaps==4.2.0

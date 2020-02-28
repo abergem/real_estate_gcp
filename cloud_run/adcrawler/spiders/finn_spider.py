@@ -47,7 +47,7 @@ class FinnSpider():
         
         # Parse all ads
         ads_crawled = 0
-        for url in links[:1]:
+        for url in links:
             self.parse_ad(url)
             ads_crawled += 1
             sleep(2)
@@ -105,28 +105,22 @@ class FinnSpider():
         last_edited = datetime.strptime(last_edited, '%d. %b %Y %H:%M')
         d['last_edited'] = last_edited.strftime('%d/%m/%Y %H:%M')
         
-        # Dump to local output folder
-        if not os.path.exists('landing'):
-            os.makedirs('landing')
-        file_path = f'landing/{finn_code}.json'
-        with open(file_path, 'w') as outfile:
+        # Dump to local /tmp folder
+        local_file_path = f'/tmp/{finn_code}.json'
+        with open(local_file_path, 'w') as outfile:
             json.dump(d, outfile)
         
         # Upload to cloud storage
-        bucket_name = 'advance-nuance-248610-realestate-ads'
-        source_file_name = file_path
-        destination_blob_name = file_path
+        bucket_name = 'advance-nuance-248610-realestate-ads-landing'
+        year, month, day = datetime.today().year, datetime.today().month, datetime.today().day
+        date_tag = str(year)+str(month)+str(day)
+        destination_blob_name = os.path.join('landing', date_tag, finn_code+'.json')
 
         storage_client = storage.Client()
         bucket = storage_client.bucket(bucket_name)
         blob = bucket.blob(destination_blob_name)
-        blob.upload_from_filename(source_file_name)
+        blob.upload_from_filename(local_file_path)
 
-        # self.logger.info(
-        #     "File {} uploaded to {}.".format(
-        #         source_file_name, destination_blob_name
-        #     )
-        # )
 
     def extract_field_value_pairs(self, field: str, value: str, d: dict) -> dict:
         # What is usually in 'key info'

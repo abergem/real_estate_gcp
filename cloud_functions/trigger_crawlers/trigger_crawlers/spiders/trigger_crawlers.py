@@ -20,7 +20,7 @@ class CrawlerTrigger(scrapy.Spider):
         headers = {'Content-Type': 'application/json'}
         yield scrapy.http.JsonRequest(url=cloud_run_url, method='POST', data=payload, callback=None)
 
-        next_page = response.xpath('//a[@aria-label="Neste side"]/@href').get()
+        next_page = response.xpath('//a[@aria-label="Neste resultatside"]/@href').get()
 
         if next_page:
             yield response.follow(next_page, callback=self.trigger_crawler)

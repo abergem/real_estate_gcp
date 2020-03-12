@@ -8,6 +8,21 @@ from datetime import datetime
 
 GCP_PROJECT = os.environ.get('GOOGLE_CLOUD_PROJECT')
 
+month_dict = {
+    'jan': 'Jan',
+    'feb': 'Feb',
+    'mar': 'Mar',
+    'apr': 'Apr',
+    'mai': 'May',
+    'jun': 'Jun',
+    'jul': 'Jul',
+    'aug': 'Aug',
+    'sep': 'Sep',
+    'okt': 'Oct',
+    'nov': 'Nov',
+    'des': 'Dec'
+}
+
 
 def transform(data, context):
     ''' Example of payload:
@@ -42,8 +57,11 @@ def transform(data, context):
     with open(destination_path) as json_file:
         data = json.load(json_file)
 
+    # Translate Norwegian month to English
+    for key in month_dict.keys():
+        data['last_edited'] = data['last_edited'].replace(key, month_dict[key])
     # Cast last_edited from string to datetime
-    data['last_edited'] = datetime.strptime(data['last_edited'], '%d/%m/%Y %H:%M')
+    data['last_edited'] = datetime.strptime(data['last_edited'], '%d. %b. %Y %H:%M')
 
     # Get geo data from googlemaps API
     api_key_blob = landing_bucket.blob('secrets/api-key.txt')
@@ -54,6 +72,10 @@ def transform(data, context):
     data['geo_area'] = geocode_result[0]['address_components'][2]['short_name']
     data['longitude'] = geocode_result[0]['geometry']['location']['lng']
     data['latitude'] = geocode_result[0]['geometry']['location']['lat']
+    # For testing purposes:
+    # data['geo_area'] = 'tmp'
+    # data['longitude'] = 12345
+    # data['latitude'] = 12345
 
     # Save processed json file to local tmp folder
     processed_file_path = os.path.join('/tmp', file_name)
@@ -87,5 +109,5 @@ if __name__ == '__main__':
 
     data = {}
     data['bucket'] = 'advance-nuance-248610-realestate-ads-landing'
-    data['name'] = f'landing/{date_tag}/157887541.json'
+    data['name'] = f'landing/{date_tag}/157055958.json'
     transform(data, None)

@@ -1,4 +1,7 @@
-'''Spider to scrape Finn'''
+'''Spider to scrape Finn
+
+
+'''
 
 import os
 from bs4 import BeautifulSoup
@@ -9,14 +12,25 @@ from google.cloud import storage
 from time import sleep
 from datetime import datetime
 import requests
+from requests import Session
 from lxml import html
 import random
 
+from retry.api import retry_call
+
+def retry_decorator(f):
+    def inner(self, *fargs, **fkwargs):
+        result = retry_call(f, fargs=(self,)+fargs, fkwargs=fkwargs, tries=self.tries,
+                            delay=self.delay, logger=self.logger)
+        return result
+    return inner
 
 class FinnSpider():
 
     def __init__(self, logger):
         self.logger = logger
+        self.delay = 3
+        self.tries = 3
         
         user_agents = ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A',
                        'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.116 Safari/537.36',
@@ -27,6 +41,7 @@ class FinnSpider():
         user_agent = random.choice(user_agents)
         self.headers = {'User-Agent': user_agent}
 
+    @retry_decorator
     def crawl_ads(self, page_url):
         
         # Get all links to ads
@@ -43,7 +58,7 @@ class FinnSpider():
             except IndexError:
                 pass
         links = ['https://finn.no'+l for l in links if 'finnkode' in l]
-        links = [l for l in links if 'newbuildings' not in l]
+        links = [l for l in links if 'homes' in l]
         
         # Parse all ads
         ads_crawled = 0
@@ -54,12 +69,12 @@ class FinnSpider():
         self.logger.info(f'Crawled {ads_crawled} from {page_url}')
 
 
+    @retry_decorator
     def parse_ad(self, url):
 
         d = {}
         finn_code = url.split('=')[1]
         d['finn_code'] = finn_code
-
         page = requests.get(url, headers=self.headers)
         tree = html.fromstring(page.content)
         
@@ -78,6 +93,7 @@ class FinnSpider():
 
         # Adresse
         d['address'] = tree.xpath('//section[@class="panel"]//p[@class="u-caption"]/text()')[0]
+
         # Pris
         d['price'] = self.extract_digits(tree.xpath('//div[@class="panel"]//span[@class="u-t3"]/text()')[0])
         
@@ -101,9 +117,7 @@ class FinnSpider():
             d = self.extract_field_value_pairs(field, value, d)
 
         # Sist endret
-        last_edited = tree.xpath('//section[@aria-labelledby="ad-info-heading"]//tr/td/text()')[0]
-        last_edited = datetime.strptime(last_edited, '%d. %b %Y %H:%M')
-        d['last_edited'] = last_edited.strftime('%d/%m/%Y %H:%M')
+        d['last_edited'] = tree.xpath('//section[@aria-labelledby="ad-info-heading"]//tr/td/text()')[0]
         
         # Dump to local /tmp folder
         local_file_path = f'/tmp/{finn_code}.json'

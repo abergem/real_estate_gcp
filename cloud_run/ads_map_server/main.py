@@ -55,8 +55,8 @@ def modify_doc(doc):
     # source.remove('index')
     
     # web mercator coordinates
-    # x_range, y_range = ((10.6e5, 10.9e5), (59.84e5, 59.98e5))
-    x_range, y_range = ((1e5, 32e5), (80e5, 115e5))
+    # x_range, y_range = ((1e5, 32e5), (80e5, 115e5))
+    x_range, y_range = ((11.6e5, 12.5e5), (83.7e5, 83.9e5))
     
     # *********************************
     # Tab 1: Prices per square meter
@@ -72,7 +72,7 @@ def modify_doc(doc):
             ])
     
     # Create glyph
-    p1 = figure(width=800, height=800,
+    p1 = figure(width=1600, height=800,
                 tools=['pan', 'wheel_zoom', hover],
                 active_scroll='wheel_zoom',
                 toolbar_location='above',
@@ -89,8 +89,8 @@ def modify_doc(doc):
     
     # Create color mapper
     color_mapper = LinearColorMapper(palette=palette, 
-                                     low=50,
-                                     high=150)
+                                     low=80,
+                                     high=130)
     
     # Add circle on glyph for localities
     p1.circle(x='x', 

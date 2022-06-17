@@ -1,5 +1,5 @@
 requests==2.22.0
-Scrapy==1.8.0
+Scrapy==2.6.1
 selenium==3.141.0
 docker==4.2.0
 Flask==1.0.2

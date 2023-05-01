@@ -2,7 +2,7 @@ requests==2.22.0
 Scrapy==1.8.0
 selenium==3.141.0
 docker==4.2.0
-Flask==1.0.2
+Flask==2.3.2
 gunicorn==19.9.0
 chromedriver_binary==70.0.3538.16.0
 google-cloud-storage==1.26.0
